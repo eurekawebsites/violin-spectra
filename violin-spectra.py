@@ -19,7 +19,7 @@ if doi:
             url = res.json()['message']['URL']
         except ValueError as e:
             st.write("An error occured: Invalid response, response is not in json format")
-            return
+            raise SystemExit
     paper = requests.get(url)
     if paper.status_code != 200:
         st.write("An error occured: ", paper.text)
