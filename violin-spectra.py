@@ -14,7 +14,7 @@ nltk.download('punkt')
 doi = st.text_input("Enter DOI of the paper:")
 
 if doi:
-    paper = requests.get(doi).content
+    paper = requests.get(doi, allow_redirects=False).content
     soup = BeautifulSoup(paper, 'html.parser')
     text = soup.get_text()
     parser = PlaintextParser.from_string(text, Tokenizer("english"))
