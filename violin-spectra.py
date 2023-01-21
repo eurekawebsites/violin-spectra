@@ -17,18 +17,18 @@ if doi:
     else:
         try:
             url = res.json()['message']['URL']
+            paper = requests.get(url)
+            if paper.status_code != 200:
+                st.write("An error occured: ", paper.text)
+            else:
+                soup = BeautifulSoup(paper.content, 'html.parser')
+                text = soup.get_text()
+                parser = PlaintextParser.from_string(text, Tokenizer("english"))
+                summarizer = LexRankSummarizer()
+                summary = summarizer(parser.document, 5)
+                st.write("Summary of the paper:")
+                for sentence in summary:
+                    st.write(sentence)
         except ValueError as e:
             st.write("An error occured: Invalid response, response is not in json format")
             raise SystemExit
-    paper = requests.get(url)
-    if paper.status_code != 200:
-        st.write("An error occured: ", paper.text)
-    else:
-        soup = BeautifulSoup(paper.content, 'html.parser')
-        text = soup.get_text()
-        parser = PlaintextParser.from_string(text, Tokenizer("english"))
-        summarizer = LexRankSummarizer()
-        summary = summarizer(parser.document, 5)
-        st.write("Summary of the paper:")
-        for sentence in summary:
-            st.write(sentence)
