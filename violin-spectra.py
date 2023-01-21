@@ -40,5 +40,3 @@ if doi:
         st.write("An error occured while requesting the API: ", e)
     finally:
         res.close()
-        if paper:
-            paper.close()
