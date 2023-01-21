@@ -8,6 +8,8 @@ from translate import Translator
 
 st.title("Scientific Paper Summary Generator")
 
+nltk.download('punkt')
+
 doi = st.text_input("Enter DOI of the paper:")
 
 if doi:
